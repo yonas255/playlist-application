@@ -14,3 +14,5 @@ public class MusicManager {
    private LikedPlaylist likedPlaylist;
    private List<Genre> genrePlaylists;  
 }
+
+
