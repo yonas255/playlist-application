@@ -9,20 +9,20 @@ package musicplaylistapplication;
  * @author yonas
  */
 public class Node {
-   private Object element;
+   private Song song;
    private Node next;
 
-    public Node(Object element, Node next) {
-        this.element = element;
+    public Node(Song song) {
+        this.song = song;
         this.next = next;
     }
 
-    public Object getElement() {
-        return element;
+    public Song getSong() {
+        return song;
     }
 
-    public void setElement(Object element) {
-        this.element = element;
+    public void setSong(Song song) {
+        this.song = song;
     }
 
     public Node getNext() {
@@ -35,10 +35,8 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node{" + "element=" + element + ", next=" + next + '}';
+        return "Node{" + "song=" + song + ", next=" + next + '}';
     }
-   
+
    
 }
-
-

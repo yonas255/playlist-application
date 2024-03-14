@@ -12,7 +12,14 @@ import java.util.List;
  */
 public class MusicManager {
    private LikedPlaylist likedPlaylist;
-   private List<Genre> genrePlaylists;  
+   private List<Genre> genrePlaylists; 
+
+    public MusicManager(LikedPlaylist likedPlaylist, List<Genre> genrePlaylists) {
+        this.likedPlaylist = likedPlaylist;
+        this.genrePlaylists = genrePlaylists;
+    }
+   
+   
 }
 
 
