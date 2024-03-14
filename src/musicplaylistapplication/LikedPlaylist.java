@@ -30,6 +30,8 @@ public class LikedPlaylist implements PlayListInterface {
      int count=0;
      Node current=head;
         while(current !=null){
+            count++;
+            current=current.getNext();
         }
         
         return count;

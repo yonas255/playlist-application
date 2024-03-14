@@ -14,7 +14,7 @@ public class Node {
 
     public Node(Song song) {
         this.song = song;
-        this.next = next;
+        this.next = null;
     }
 
     public Song getSong() {
