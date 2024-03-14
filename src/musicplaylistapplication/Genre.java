@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class Genre implements PlayListInterface{
    private String genre;
-    private List<Song> songs; 
+    private Node head; 
     
      public Genre(String genre, List<Song> songs) {
         this.genre = genre;
-        this.songs = songs;
+        this.head= null;
     }
 
 
@@ -25,31 +25,63 @@ public class Genre implements PlayListInterface{
 //implement playList methods 
     @Override
     public boolean isEmpty() {
-      return songs.isEmpty();
+      return head==null;
     }
 
     @Override
     public int size() {
-        return songs.size();
-    }
+       int count=0;
+       Node current=head;
+       while(current!=null){
+          count++;
+          current=current.getNext();
+       }
+       return count;
+       }
+    
 
     @Override
     public void addSong(Song song) {
-     songs.add(song);
+       Node newNode= new Node(song);
+       if(isEmpty()){
+          head= newNode;
+       }else{
+         Node current = head;
+         while(current.getNext() != null){
+         current = current.getNext();
+         }
+         current.setNext(newNode);
+       }
     }
 
     @Override
     public void removeSong(Song song) {
-      songs.remove(song);
-        
+      if(isEmpty()){
+          return;
+      }
+      if (head.getSong().equals(song)){
+          head=head.getNext();
+          return;
+      }
+      Node prev = null;
+      Node current = head;
+      while(current != null && !current.getSong().equals(song)){
+         prev=current;
+         current=current.getNext();
+      }
+      if(current != null){
+          prev.setNext(current.getNext());
+      }
     }
-
+    
     @Override
     public Song searchSong(String title) {
-      for(Song song: songs){
-      if(song.getTitle().equals(title)){
-          return song;
+      Node current = head;  
+      while(current != null){
+      if(current.getSong().getTitle().equals(title)){
+          return current.getSong();
       }
+       current=current.getNext();
       }
       return null;
     }
@@ -57,8 +89,10 @@ public class Genre implements PlayListInterface{
     @Override
     public void print() {
       System.out.println("Playlist:"+ genre);
-      for(Song song: songs){
-          System.out.println(song.getTitle()+"-"+ song.getArtist());
+      Node current = head;
+      while(current != null){
+          System.out.println(current.getSong());
+          current = current.getNext();
       }
     }
 }
