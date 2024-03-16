@@ -15,7 +15,7 @@ public class MusicPlaylistApp {
      */
     public static void main(String[] args) {
         SwingGUI G  = new SwingGUI();
-        G.setSize(640, 640); // the size is set to 640 x 640
+        G.setSize(645, 640); // the size is set to 640 x 640
         G.setLocationRelativeTo(null); // To be in the center
         G.setVisible(true);
     }
