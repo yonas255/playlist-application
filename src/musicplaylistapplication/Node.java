@@ -11,12 +11,14 @@ package musicplaylistapplication;
 public class Node {
    private Song song;
    private Node next;
-
+    
+   // constructor 
     public Node(Song song) {
         this.song = song;
         this.next = null;
     }
 
+    //setters and getters 
     public Song getSong() {
         return song;
     }

@@ -9,11 +9,11 @@ package musicplaylistapplication;
  * @author yonas
  */
 public interface PlayListInterface {
-   void addSong(Song song);
-    void deleteSong(String title);
-    Song searchSong(String title);
-    void printPlaylist();
-    int countSongs();
+   void addSong(Song song);//add a song to the playlist.
+    void deleteSong(String title);// delete for a song by title
+    Song searchSong(String title);// search for a song by title
+    void printPlaylist();// print the song list
+    int countSongs();// count the songs in the playlsit
 }
 
 

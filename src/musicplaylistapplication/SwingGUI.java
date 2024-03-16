@@ -89,7 +89,7 @@ public class SwingGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(ADD);
-        ADD.setBounds(120, 510, 90, 33);
+        ADD.setBounds(10, 510, 90, 33);
 
         move.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         move.setText("Move to Genre");
@@ -109,7 +109,7 @@ public class SwingGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Delete);
-        Delete.setBounds(10, 510, 100, 33);
+        Delete.setBounds(110, 510, 100, 33);
 
         Size.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Size.setText("Size");
@@ -132,14 +132,14 @@ public class SwingGUI extends javax.swing.JFrame {
         Print.setBounds(510, 510, 90, 33);
 
         Search.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Search.setText("Search");
+        Search.setText("Search by Title");
         Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchActionPerformed(evt);
             }
         });
         jPanel1.add(Search);
-        Search.setBounds(330, 50, 100, 33);
+        Search.setBounds(260, 50, 170, 33);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musicplaylistapplication/black-cat-8242130_640.png"))); // NOI18N
         jPanel1.add(jLabel3);
@@ -172,36 +172,74 @@ public class SwingGUI extends javax.swing.JFrame {
     private void ArtistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArtistActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ArtistActionPerformed
-
+   
+    // Method invoked when the user clicks the "ADD" button.
     private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
+                // Retrieve the song title and artist from the input fields
                 String title = Title.getText();
                 String artist = Artist.getText();
+                // Add the song to the liked playlist using the MusicManager
                 musicManager.getLikedPlaylist().addSong(new Song(title, artist));
+                // Update the last added song reference
                 lastAddedSong = new Song(title, artist); // Update the last added song reference
+                // Show a confirmation message indicating successful addition of the song
                 JOptionPane.showMessageDialog(null, "Song added successfully!");
             
     }//GEN-LAST:event_ADDActionPerformed
 
     private void moveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveActionPerformed
-                String title = Title.getText();
-                String artist = Artist.getText(); // Retrieve the artist from the input field
-                if (!musicManager.getLikedPlaylist().containsSong(title)) {
-                    JOptionPane.showMessageDialog(null, "Song does not exist in the Liked Playlist.");
-                    return;
-                }
-                String[] genres = {"Rock", "Pop"}; // Add more genres if needed
-                JComboBox<String> genreComboBox = new JComboBox<>(genres);
-                int result = JOptionPane.showConfirmDialog(null, genreComboBox, "Select Genre", JOptionPane.OK_CANCEL_OPTION);
-                if (result == JOptionPane.OK_OPTION) {
-                    String selectedGenre = (String) genreComboBox.getSelectedItem();
-                    musicManager.moveLastAddedSongToGenrePlaylist(selectedGenre);
-                }
-            
+    String title = Title.getText();
+    String artist = Artist.getText(); // Retrieve the artist from the input field
+    LikedPlaylist likedPlaylist = musicManager.getLikedPlaylist();
+    Song lastAddedSong = likedPlaylist.getLastAddedSong();
+
+    // Check if the entered song matches the last added song
+    if (lastAddedSong == null || (!lastAddedSong.getTitle().equals(title) || !lastAddedSong.getArtist().equals(artist))) {
+        // Show a message if the entered song does not match the last added song
+        JOptionPane.showMessageDialog(null, "Sorry, only the last added song can be moved to the genre.");
+        return;
+    }
+
+    String[] genres = {"Rock", "Pop"}; // Add more genres if needed
+    JComboBox<String> genreComboBox = new JComboBox<>(genres);
+    int result = JOptionPane.showConfirmDialog(null, genreComboBox, "Select Genre", JOptionPane.OK_CANCEL_OPTION);
+
+    if (result == JOptionPane.OK_OPTION) {
+        String selectedGenre = (String) genreComboBox.getSelectedItem();
+        musicManager.moveLastAddedSongToGenrePlaylist(selectedGenre);
+        JOptionPane.showMessageDialog(null, "Last added song moved to " + selectedGenre + " playlist.");
+
+        // Update the last added song after moving
+        likedPlaylist = musicManager.getLikedPlaylist();
+        lastAddedSong = likedPlaylist.getLastAddedSong();
+
+        // If there is a new last added song, enable moving again
+        if (lastAddedSong != null) {
+            Title.setText(lastAddedSong.getTitle());
+            Artist.setText(lastAddedSong.getArtist());
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Move operation cancelled.");
+    }
     }//GEN-LAST:event_moveActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-          String title = Title.getText();
-          musicManager.getLikedPlaylist().deleteSong(title);
+         String title = Title.getText().trim(); // Trim to remove leading and trailing spaces
+    
+     if (title.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter the title of the song to delete.");
+        return; // Exit the method if the title is empty
+     }
+        LikedPlaylist likedPlaylist = musicManager.getLikedPlaylist();
+    
+    if (!likedPlaylist.containsSong(title)) {
+        JOptionPane.showMessageDialog(null, "The song \"" + title + "\" does not exist in the Liked Playlist.");
+        return; // Exit the method if the song doesn't exist
+    }
+    
+        likedPlaylist.deleteSong(title);
+    // Notify the user that the song has been deleted
+    JOptionPane.showMessageDialog(null, "The song \"" + title + "\" has been deleted from the Liked Playlist.");
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
@@ -220,49 +258,65 @@ public class SwingGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_SearchActionPerformed
 
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
-       String[] options = {"Liked Playlist", "Genre Playlists"};
-    String choice = (String) JOptionPane.showInputDialog(null, "Select playlist to print:",
-        "Print Playlist", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        // Options for the user to choose from
+     String[] options = {"Liked Playlist", "Genre Playlists"};
 
-    if (choice != null) {
-        if (choice.equals("Liked Playlist")) {
-            LikedPlaylist likedPlaylist = musicManager.getLikedPlaylist();
-            if (likedPlaylist.getHead() == null) {
-                JOptionPane.showMessageDialog(null, "Liked Playlist is empty. No songs to display.");
-            } else {
-                likedPlaylist.printPlaylist();
-            }
-        } else if (choice.equals("Genre Playlists")) {
-            boolean allEmpty = true;
-            StringBuilder message = new StringBuilder("Genre Playlists:\n");
-            for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
-                if (genrePlaylist.getHead() != null) {
-                    allEmpty = false;
-                    message.append("Genre: ").append(genrePlaylist.getGenre()).append("\n");
-                    genrePlaylist.printPlaylist();
-                }
-            }
-            if (allEmpty) {
-                JOptionPane.showMessageDialog(null, "Genre Playlists are all empty. No songs to display.");
-            }
-        }
-    }  
+     // Display a dialog box for the user to select the playlist to print
+     String choice = (String) JOptionPane.showInputDialog(null, "Select playlist to print:",
+         "Print Playlist", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+     // Check if the user made a selection
+     if (choice != null) {
+         // If the user chose to print the Liked Playlist
+         if (choice.equals("Liked Playlist")) {
+             LikedPlaylist likedPlaylist = musicManager.getLikedPlaylist();
+             // Check if the liked playlist is empty
+             if (likedPlaylist.getHead() == null) {
+                 JOptionPane.showMessageDialog(null, "Liked Playlist is empty. No songs to display.");
+             } else {
+                 // Print the liked playlist
+                 likedPlaylist.printPlaylist();
+             }
+         } 
+         // If the user chose to print the Genre Playlists
+         else if (choice.equals("Genre Playlists")) {
+             boolean allEmpty = true;
+             StringBuilder message = new StringBuilder("Genre Playlists:\n");
+             // Iterate through each genre playlist
+             for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
+                 // Check if the genre playlist is not empty
+                 if (genrePlaylist.getHead() != null) {
+                     allEmpty = false;
+                     // Append the genre name to the message
+                     message.append("Genre: ").append(genrePlaylist.getGenre()).append("\n");
+                     // Print the genre playlist
+                     genrePlaylist.printPlaylist();
+                 }
+             }
+             // If all genre playlists are empty, display a message
+             if (allEmpty) {
+                 JOptionPane.showMessageDialog(null, "Genre Playlists are all empty. No songs to display.");
+             }
+         }
+      }   
     }//GEN-LAST:event_PrintActionPerformed
 
     private void SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SizeActionPerformed
-       // Get the size of the liked playlist
-    int likedPlaylistSize = musicManager.getLikedPlaylist().countSongs();
-    
-    // Get the size of each genre playlist
-    StringBuilder genreSizes = new StringBuilder();
-    for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
-        int genreSize = genrePlaylist.countSongs();
-        genreSizes.append("Number of songs in ").append(genrePlaylist.getGenre()).append(" playlist: ").append(genreSize).append("\n");
-    }
-    
-    // Display the sizes of the liked playlist and genre playlists
-    JOptionPane.showMessageDialog(null, "Number of liked songs: " + likedPlaylistSize + "\n" + genreSizes.toString());
+     // Get the size of the liked playlist
+     int likedPlaylistSize = musicManager.getLikedPlaylist().countSongs();
 
+     // Get the size of each genre playlist
+     StringBuilder genreSizes = new StringBuilder();
+     for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
+            // Get the size of the current genre playlist
+            int genreSize = genrePlaylist.countSongs();
+
+            // Append the size information to the StringBuilder
+            genreSizes.append("Number of songs in ").append(genrePlaylist.getGenre()).append(" playlist: ").append(genreSize).append("\n");
+         }
+
+     // Display the sizes of the liked playlist and genre playlists
+     JOptionPane.showMessageDialog(null, "Number of liked songs: " + likedPlaylistSize + "\n" + genreSizes.toString());
     }//GEN-LAST:event_SizeActionPerformed
 
     /**
