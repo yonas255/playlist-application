@@ -14,10 +14,10 @@ public class MusicPlaylistApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SwingGUI Gui  = new SwingGUI();
-        Gui.setSize(640, 640); // the size is set to 640 x 640
-        Gui.setLocationRelativeTo(null); // To be in the center
-        Gui.setVisible(true);
+        SwingGUI G  = new SwingGUI();
+        G.setSize(640, 640); // the size is set to 640 x 640
+        G.setLocationRelativeTo(null); // To be in the center
+        G.setVisible(true);
     }
     
 }

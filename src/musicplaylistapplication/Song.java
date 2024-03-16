@@ -4,6 +4,8 @@
  */
 package musicplaylistapplication;
 
+import java.util.Objects;
+
 /**
  *
  * @author yonas
@@ -11,12 +13,10 @@ package musicplaylistapplication;
 public class Song {
    private String title;
     private String artist;
-    private String genre;
 
-    public Song(String title, String artist, String genre) {
+    public Song(String title, String artist) {
         this.title = title;
         this.artist = artist;
-        this.genre = genre;
     }
 
     public String getTitle() {
@@ -35,21 +35,36 @@ public class Song {
         this.artist = artist;
     }
 
-    public String getGenre() {
-        return genre;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Song other = (Song) obj;
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        return Objects.equals(this.artist, other.artist);
     }
 
     @Override
     public String toString() {
-        return "Song{" + "title=" + title + ", artist=" + artist + ", genre=" + genre + '}';
+        return "Song{" + "title=" + title + ", artist=" + artist + '}';
     }
     
     
-    
+   
 }
-  
-
+   

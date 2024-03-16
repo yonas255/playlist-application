@@ -9,12 +9,11 @@ package musicplaylistapplication;
  * @author yonas
  */
 public interface PlayListInterface {
-    boolean isEmpty();
-    int size();
-    void addSong(Song song);
-    void removeSong(Song song);
+   void addSong(Song song);
+    void deleteSong(String title);
     Song searchSong(String title);
-    void print();    
+    void printPlaylist();
+    int countSongs();
 }
 
 
