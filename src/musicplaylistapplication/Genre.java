@@ -4,6 +4,8 @@
  */
 package musicplaylistapplication;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yonas
@@ -19,6 +21,10 @@ public class Genre implements PlayListInterface{
     
     public String getGenre() {
         return genre;
+    }
+    
+    public Node getHead() {
+    return head;
     }
 
     @Override
@@ -57,35 +63,47 @@ public class Genre implements PlayListInterface{
 
     @Override
     public Song searchSong(String title) {
-        Node current = head;
-        while (current != null) {
-            if (current.getSong().getTitle().equals(title)) {
-                return current.getSong();
-            }
-            current = current.getNext();
+      Node current = head;
+      while (current != null) {
+        if (current.getSong().getTitle().equalsIgnoreCase(title)) {
+            return current.getSong();
         }
-        return null;
+        current = current.getNext();
+      }
+      return null;
     }
+
+ 
 
     @Override
     public void printPlaylist() {
+        StringBuilder playlistText = new StringBuilder();
         Node current = head;
-      while (current != null) {
-        System.out.println("Genre: " + genre + ", " + current.getSong());
-        current = current.getNext();
-     }
+        while (current != null) {
+            playlistText.append(current.getSong()).append("\n");
+            current = current.getNext();
+        }
+        JOptionPane.showMessageDialog(null, "Genre: " + genre + " playlist:\n" + playlistText.toString());
+    
     }
 
     @Override
     public int countSongs() {
-        int count = 0;
+        if (head == null) {
+        JOptionPane.showMessageDialog(null, "Genre playlist is empty.");
+        return 0;
+        }
+
+        int genreCount = 0;
         Node current = head;
         while (current != null) {
-            count++;
+            genreCount++;
             current = current.getNext();
         }
-        return count;
-    } 
+
+        JOptionPane.showMessageDialog(null, "Number of songs in " + genre + " playlist: " + genreCount);
+        return genreCount;
+  }
     
     public boolean containsSong(String title) {
     Node current = head;

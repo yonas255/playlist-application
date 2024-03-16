@@ -4,6 +4,7 @@
  */
 package musicplaylistapplication;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,11 +12,11 @@ import javax.swing.JOptionPane;
  * @author yonas
  */
 public class SwingGUI extends javax.swing.JFrame {
- PlayListInterface playlistInterface = new LikedPlaylist();
-    /**
-     * Creates new form NewJFrame
-     */
+   private MusicManager musicManager;
+   private Song lastAddedSong;// tracking the last song
+   
     public SwingGUI() {
+       musicManager = new MusicManager ();
         initComponents();
     }
 
@@ -28,303 +29,137 @@ public class SwingGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Genre = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        TitleLiked = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        Title = new javax.swing.JTextField();
+        Artist = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        Artistliked = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        add = new javax.swing.JButton();
-        Move = new javax.swing.JButton();
-        deleteLiked = new javax.swing.JButton();
-        PrintLiked = new javax.swing.JButton();
-        sizeLiked = new javax.swing.JButton();
-        SearchLiked = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        TitleGenre1 = new javax.swing.JTextField();
-        ArtistGenre1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton2SearchGenre1 = new javax.swing.JButton();
-        SizeGenre1 = new javax.swing.JButton();
-        PrintGenre1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        SearchGenre1 = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        SearchGenre2 = new javax.swing.JTextField();
-        jButton3SearchGenre2 = new javax.swing.JButton();
-        TitleGenre2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        ArtistGenre2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        TexSearch = new javax.swing.JTextField();
+        ADD = new javax.swing.JButton();
+        move = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        Size = new javax.swing.JButton();
+        Print = new javax.swing.JButton();
+        Search = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Title ");
-
-        Artistliked.addActionListener(new java.awt.event.ActionListener() {
+        Title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ArtistlikedActionPerformed(evt);
+                TitleActionPerformed(evt);
             }
         });
+
+        Artist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ArtistActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Title");
 
         jLabel2.setText("Artist");
 
-        add.setText("Add");
-        add.addActionListener(new java.awt.event.ActionListener() {
+        ADD.setText("ADD");
+        ADD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
+                ADDActionPerformed(evt);
             }
         });
 
-        Move.setText("Move ");
-
-        deleteLiked.setText("Delete");
-
-        PrintLiked.setText("Print");
-
-        sizeLiked.setText("Size");
-
-        SearchLiked.addActionListener(new java.awt.event.ActionListener() {
+        move.setText("Move to Genre");
+        move.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchLikedActionPerformed(evt);
+                moveActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                DeleteActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+        Size.setText("Size");
+        Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SizeActionPerformed(evt);
+            }
+        });
+
+        Print.setText("Print");
+        Print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrintActionPerformed(evt);
+            }
+        });
+
+        Search.setText("Search");
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Search)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TitleLiked, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                            .addComponent(Artistliked)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(PrintLiked)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(sizeLiked))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(add)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(Move)))
-                                .addGap(47, 47, 47)
-                                .addComponent(deleteLiked)
-                                .addGap(149, 149, 149)))
-                        .addGap(33, 33, 33)
-                        .addComponent(SearchLiked, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchLiked, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(TitleLiked, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Artistliked, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TexSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(ADD)
+                        .addGap(18, 18, 18)
+                        .addComponent(move)
+                        .addGap(42, 42, 42)
+                        .addComponent(Delete)
+                        .addGap(18, 18, 18)
+                        .addComponent(Size)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                        .addComponent(Print)))
+                .addGap(55, 55, 55))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(110, 110, 110)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add)
-                    .addComponent(Move)
-                    .addComponent(deleteLiked))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(PrintLiked))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(sizeLiked)))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Artist, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        Genre.addTab("Liked PlayList", jPanel2);
-
-        jLabel3.setText("Title");
-
-        jLabel4.setText("Artist");
-
-        jButton2SearchGenre1.setText("Search");
-
-        SizeGenre1.setText("size");
-
-        PrintGenre1.setText("Print");
-
-        jButton5.setText("Delete");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jLabel3)
-                                .addGap(40, 40, 40))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TitleGenre1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(ArtistGenre1)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(SizeGenre1)
-                        .addGap(66, 66, 66)
-                        .addComponent(PrintGenre1)
-                        .addGap(100, 100, 100)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton2SearchGenre1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(SearchGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton5))))
-                .addContainerGap(222, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TexSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Search))
+                .addGap(63, 63, 63)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(Artist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ADD)
+                    .addComponent(move)
+                    .addComponent(Delete)
+                    .addComponent(Size)
+                    .addComponent(Print))
+                .addGap(57, 57, 57))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2SearchGenre1)
-                    .addComponent(SearchGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TitleGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ArtistGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(123, 288, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(SizeGenre1)
-                            .addComponent(PrintGenre1)
-                            .addComponent(jButton5))
-                        .addGap(141, 141, 141))))
-        );
-
-        Genre.addTab("Genre-1", jPanel3);
-
-        jButton3SearchGenre2.setText("Search");
-        jButton3SearchGenre2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3SearchGenre2ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Title");
-
-        jLabel6.setText("Aritst");
-
-        jButton3.setText("Print");
-
-        jButton4.setText("Size");
-
-        jButton6.setText("Delete");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TitleGenre2, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(ArtistGenre2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jButton3SearchGenre2)
-                .addGap(39, 39, 39)
-                .addComponent(SearchGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(233, 233, 233))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(jButton3)
-                .addGap(53, 53, 53)
-                .addComponent(jButton4)
-                .addGap(53, 53, 53)
-                .addComponent(jButton6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3SearchGenre2)
-                    .addComponent(SearchGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(111, 111, 111)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TitleGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ArtistGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-                        .addComponent(jButton6)
-                        .addGap(98, 98, 98))))
-        );
-
-        Genre.addTab("Genre-2", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,47 +167,119 @@ public class SwingGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Genre, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Genre)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ArtistlikedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArtistlikedActionPerformed
+    private void TitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ArtistlikedActionPerformed
+    }//GEN-LAST:event_TitleActionPerformed
 
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        if (TitleLiked.getText().isEmpty() == true || Artistliked.getText().isEmpty() == true) {
-            JOptionPane.showMessageDialog(null , "Please enter the title and the artist.");
+    private void ArtistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArtistActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ArtistActionPerformed
+
+    private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
+                String title = Title.getText();
+                String artist = Artist.getText();
+                musicManager.getLikedPlaylist().addSong(new Song(title, artist));
+                lastAddedSong = new Song(title, artist); // Update the last added song reference
+                JOptionPane.showMessageDialog(null, "Song added successfully!");
+            
+    }//GEN-LAST:event_ADDActionPerformed
+
+    private void moveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveActionPerformed
+                String title = Title.getText();
+                String artist = Artist.getText(); // Retrieve the artist from the input field
+                if (!musicManager.getLikedPlaylist().containsSong(title)) {
+                    JOptionPane.showMessageDialog(null, "Song does not exist in the Liked Playlist.");
+                    return;
+                }
+                String[] genres = {"Rock", "Pop"}; // Add more genres if needed
+                JComboBox<String> genreComboBox = new JComboBox<>(genres);
+                int result = JOptionPane.showConfirmDialog(null, genreComboBox, "Select Genre", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String selectedGenre = (String) genreComboBox.getSelectedItem();
+                    musicManager.moveLastAddedSongToGenrePlaylist(selectedGenre);
+                }
+            
+    }//GEN-LAST:event_moveActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+          String title = Title.getText();
+          musicManager.getLikedPlaylist().deleteSong(title);
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
+       String title = TexSearch.getText().trim(); // Get the text and remove leading/trailing spaces
+    
+    if (title.isEmpty()) { // Check if the title is empty
+        JOptionPane.showMessageDialog(null, "Field cannot be empty. Please enter a title to search.");
+    } else {
+        Song song = musicManager.searchSong(title);
+        if (song != null) {
+            JOptionPane.showMessageDialog(null, "Song Found:\nTitle: " + song.getTitle() + "\nArtist: " + song.getArtist());
         } else {
-           //playlistInterface .addSong(song);
+            JOptionPane.showMessageDialog(null, "Song not found.");
         }
-    }//GEN-LAST:event_addActionPerformed
+    }
+    }//GEN-LAST:event_SearchActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
+       String[] options = {"Liked Playlist", "Genre Playlists"};
+    String choice = (String) JOptionPane.showInputDialog(null, "Select playlist to print:",
+        "Print Playlist", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
-    private void SearchLikedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchLikedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchLikedActionPerformed
+    if (choice != null) {
+        if (choice.equals("Liked Playlist")) {
+            LikedPlaylist likedPlaylist = musicManager.getLikedPlaylist();
+            if (likedPlaylist.getHead() == null) {
+                JOptionPane.showMessageDialog(null, "Liked Playlist is empty. No songs to display.");
+            } else {
+                likedPlaylist.printPlaylist();
+            }
+        } else if (choice.equals("Genre Playlists")) {
+            boolean allEmpty = true;
+            StringBuilder message = new StringBuilder("Genre Playlists:\n");
+            for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
+                if (genrePlaylist.getHead() != null) {
+                    allEmpty = false;
+                    message.append("Genre: ").append(genrePlaylist.getGenre()).append("\n");
+                    genrePlaylist.printPlaylist();
+                }
+            }
+            if (allEmpty) {
+                JOptionPane.showMessageDialog(null, "Genre Playlists are all empty. No songs to display.");
+            }
+        }
+    }  
+    }//GEN-LAST:event_PrintActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SizeActionPerformed
+       // Get the size of the liked playlist
+    int likedPlaylistSize = musicManager.getLikedPlaylist().countSongs();
+    
+    // Get the size of each genre playlist
+    StringBuilder genreSizes = new StringBuilder();
+    for (Genre genrePlaylist : musicManager.getGenrePlaylists()) {
+        int genreSize = genrePlaylist.countSongs();
+        genreSizes.append("Number of songs in ").append(genrePlaylist.getGenre()).append(" playlist: ").append(genreSize).append("\n");
+    }
+    
+    // Display the sizes of the liked playlist and genre playlists
+    JOptionPane.showMessageDialog(null, "Number of liked songs: " + likedPlaylistSize + "\n" + genreSizes.toString());
 
-    private void jButton3SearchGenre2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3SearchGenre2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3SearchGenre2ActionPerformed
+    }//GEN-LAST:event_SizeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -400,7 +307,6 @@ public class SwingGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SwingGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -411,38 +317,17 @@ public class SwingGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ArtistGenre1;
-    private javax.swing.JTextField ArtistGenre2;
-    private javax.swing.JTextField Artistliked;
-    private javax.swing.JTabbedPane Genre;
-    private javax.swing.JButton Move;
-    private javax.swing.JButton PrintGenre1;
-    private javax.swing.JButton PrintLiked;
-    private javax.swing.JTextField SearchGenre1;
-    private javax.swing.JTextField SearchGenre2;
-    private javax.swing.JTextField SearchLiked;
-    private javax.swing.JButton SizeGenre1;
-    private javax.swing.JTextField TitleGenre1;
-    private javax.swing.JTextField TitleGenre2;
-    private javax.swing.JTextField TitleLiked;
-    private javax.swing.JButton add;
-    private javax.swing.JButton deleteLiked;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2SearchGenre1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton3SearchGenre2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton ADD;
+    private javax.swing.JTextField Artist;
+    private javax.swing.JButton Delete;
+    private javax.swing.JButton Print;
+    private javax.swing.JButton Search;
+    private javax.swing.JButton Size;
+    private javax.swing.JTextField TexSearch;
+    private javax.swing.JTextField Title;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JButton sizeLiked;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton move;
     // End of variables declaration//GEN-END:variables
 }

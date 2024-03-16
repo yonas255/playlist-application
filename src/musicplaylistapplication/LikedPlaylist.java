@@ -5,6 +5,7 @@
 package musicplaylistapplication;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -12,12 +13,12 @@ import javax.swing.JTextField;
  * @author yonas
  */
 public class LikedPlaylist implements PlayListInterface {
-     private Node head;
-    private Song lastAddedSong; // Add a field to store the last added song
+    private Node head;
+    private Song lastAddedSong;
 
     public LikedPlaylist() {
         this.head = null;
-        this.lastAddedSong = null; // Initialize the last added song to null
+        this.lastAddedSong = null;
     }
 
     public Node getHead() {
@@ -36,7 +37,6 @@ public class LikedPlaylist implements PlayListInterface {
             }
             current.setNext(newNode);
         }
-        // Update the last added song whenever a new song is added
         lastAddedSong = song;
     }
 
@@ -62,62 +62,67 @@ public class LikedPlaylist implements PlayListInterface {
 
     @Override
     public Song searchSong(String title) {
-        Node current = head;
-        while (current != null) {
-            if (current.getSong().getTitle().equals(title)) {
-                return current.getSong();
-            }
-            current = current.getNext();
+       Node current = head;
+       while (current != null) {
+        if (current.getSong().getTitle().equalsIgnoreCase(title)) {
+            return current.getSong();
         }
-        return null;
+        current = current.getNext();
+    }
+    return null;
     }
 
     @Override
     public void printPlaylist() {
-        Node current = head;
-        while (current != null) {
-            System.out.println(current.getSong());
-            current = current.getNext();
-        }
+      if (head == null) {
+        JOptionPane.showMessageDialog(null, "Liked Playlist is empty. No songs to display.");
+        return;
+    }
+    
+    StringBuilder playlistText = new StringBuilder();
+    Node current = head;
+    while (current != null) {
+        playlistText.append(current.getSong()).append("\n");
+        current = current.getNext();
+    }
+    
+    JOptionPane.showMessageDialog(null, "Liked Playlist:\n" + playlistText.toString());
     }
 
     @Override
     public int countSongs() {
-        int count = 0;
-        Node current = head;
-        while (current != null) {
-            count++;
-            current = current.getNext();
-        }
-        return count;
-    } 
+    if (head == null) {
+        JOptionPane.showMessageDialog(null, "Liked playlist is empty.");
+        return 0;
+    }
+
+    int likedCount = 0;
+    Node current = head;
+    while (current != null) {
+        likedCount++;
+        current = current.getNext();
+    }
+
+    JOptionPane.showMessageDialog(null, "Number of liked songs: " + likedCount);
+    return likedCount;
+
+    
+    }
+ 
     
     // New method to get the last added song
-   public Song getLastAddedSong() {
-    Node current = head;
-    Node lastNode = null;
-    while (current != null) {
-        lastNode = current;
-        current = current.getNext();
+    public Song getLastAddedSong() {
+        return lastAddedSong;
     }
-    if (lastNode != null) {
-        return lastNode.getSong();
-    } else {
-        return null; // Liked playlist is empty
-    }
-   }
-   
- public boolean containsSong(String title, String artist) {
-    Node current = head;
-    while (current != null) {
-        Song song = current.getSong();
-        if (song.getTitle().equals(title) && song.getArtist().equals(artist)) {
-            return true;
+
+    public boolean containsSong(String title) {
+        Node current = head;
+        while (current != null) {
+            if (current.getSong().getTitle().equals(title)) {
+                return true;
+            }
+            current = current.getNext();
         }
-        current = current.getNext();
+        return false;
     }
-    return false;
-}
-
-
 }
